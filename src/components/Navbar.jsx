@@ -3,7 +3,6 @@ import React from 'react'
 const Navbar = () => {
   return (
     <nav>
-        {/* <div className="options h-16"></div> */}
         <div className="welcome mx-4">
           <div className='text-slate-600'>Welcome Back !</div>
           {/* Put your name in the line below */}

@@ -12,7 +12,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGO_URI;
 const client = new MongoClient(url);
 
 // Database Name
@@ -31,7 +31,6 @@ app.get('/', async (req, res) => {
   // save the password
   app.post('/', async (req, res) => {
     const data = req.body;
-    console.log(data);
     const collection = db.collection('documents');
     const added = await collection.insertOne(data);
     const findResult = await collection.find({}).toArray();
@@ -42,22 +41,12 @@ app.get('/', async (req, res) => {
   // delete the password
   app.delete('/', async (req, res) => {
     const data = req.body;
-    console.log(data);
     const collection = db.collection('documents');
     const deletedResult = await collection.deleteOne(data);
     const findResult = await collection.find({}).toArray();
     console.log("delete request")
     res.json(findResult)
 })
-
-// delete all the password
-// app.delete('/all', async (req, res) => {
-//     const data = req.body;
-//     const collection = db.collection('documents');
-//     const findResult = await collection.deleteMany(collection.find({}));
-
-//   res.send({Success:true})
-// })
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
